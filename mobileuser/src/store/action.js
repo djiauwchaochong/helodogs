@@ -27,38 +27,42 @@ export function fetchData(text) {
     return new Promise((resolve, reject) => {
       if (text) {
         dispatch(setLoading(true))
-        axios({
-          url: `http://192.168.100.18:3000/data?breed=${text}`,
-          method: 'GET'
-        })
-        .then(({ data }) => {
-          dispatch(setData(data));
-          resolve(data);
-        })
-        .catch((err) => {
-          dispatch(setError(err));
-          reject(err);
-        })
-        .finally(() => {
-          dispatch(setLoading(false));
-        });  
+        setTimeout(() => {
+          axios({
+            url: `http://192.168.100.18:3000/data?breed=${text.toLowerCase()}`,
+            method: 'GET'
+          })
+          .then(({ data }) => {
+            dispatch(setData(data));
+            resolve(data);
+          })
+          .catch((err) => {
+            dispatch(setError(true));
+            reject(err);
+          })
+          .finally(() => {
+            dispatch(setLoading(false));
+          });    
+        }, 500);
       } else {
-        dispatch(setLoading(true))
-        axios({
-          url: `http://192.168.100.18:3000/data`,
-          method: 'GET'
-        })
-        .then(({ data }) => {
-          dispatch(setData(data));
-          resolve(data);
-        })
-        .catch((err) => {
-          dispatch(setError(err));
-          reject(err);
-        })
-        .finally(() => {
-          dispatch(setLoading(false));
-        });  
+        setTimeout(() => {
+          dispatch(setLoading(true))
+          axios({
+            url: `http://192.168.100.18:3000/data`,
+            method: 'GET'
+          })
+          .then(({ data }) => {
+            dispatch(setData(data));
+            resolve(data);
+          })
+          .catch((err) => {
+            dispatch(setError(err));
+            reject(err);
+          })
+          .finally(() => {
+            dispatch(setLoading(false));
+          });    
+        }, 500);
       }
     })
   }

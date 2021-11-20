@@ -10,8 +10,8 @@ const server = axios.create({
 
 const Redis = require('ioredis')
 const redis = new Redis({
-  port: 12716,
-  host: "redis-12716.c252.ap-southeast-1-1.ec2.cloud.redislabs.com",
+  port: 12719,
+  host: "redis-12719.c295.ap-southeast-1-1.ec2.cloud.redislabs.com",
   password: "gajahjerapah",
 });
 
@@ -53,7 +53,11 @@ app.get('/data', async (req, res) => {
           url: `/breed/${key}/list`,
           method: 'GET'
         })
-        obj.subbreed = subbreed.data.message
+        if (subbreed.data.message.length == 0) {
+          obj.subbreed = ['No Data']
+        } else {
+          obj.subbreed = subbreed.data.message
+        }
         
         let images = await server({
           url: `/breed/${key}/images`,

@@ -2,7 +2,7 @@ import { FETCH_DATA, IS_ERROR, IS_LOADING } from "../actiontype";
 
 const initialState = {
   data: [],
-  error: null,
+  error: false,
   loading: true
 }
 

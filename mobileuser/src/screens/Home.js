@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Image, Linking } from 'react-native';
 import Constants from 'expo-constants';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchData } from "../store/action"
@@ -18,43 +18,16 @@ export default function Home() {
     dispatch(fetchData(text))
   }
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }  
+
   useEffect(() => {
     dispatch(fetchData())
   }, [])
 
   if (loading === true) {
     return (
-      <Text>LOADING BOSS</Text>
-    )
-  }
-
-  if (error === true) {
-    return (
-      <Text>ERROR BOSS</Text>
-    )
-  }
-
-  let _renderItemData = ({ item, index }) => {
-    return (
-        <View>
-          <Text>{item.breed}</Text>
-          {
-            item.subbreed.map((el, idx) => {
-              return (
-                <Text key={idx}>{el}</Text>
-              )
-            })
-          }
-          <Image source={{
-            uri: item.images[0],
-          }}
-          style={{ width: "100%", height: 200 }}
-          />
-        </View>
-      )
-  }
-
-  return (
       <View style={{
         paddingTop: Constants.statusBarHeight,
         backgroundColor: '#C2FFF9',
@@ -71,7 +44,124 @@ export default function Home() {
         }}>
           <Text style={{
             textAlign: 'center',
-            fontSize: 25
+            fontSize: 50,
+            fontWeight: '700'
+          }}>Hello Dog</Text>
+        </View>
+        <Text style={{
+            textAlign: 'center',
+            fontSize: 30,
+            marginTop: 25,
+            color: '#009DAE',
+            marginTop: 25
+          }}>Loading, Please wait...</Text>
+      </View>
+    )
+  }
+
+  if (error === true) {
+    return (
+      <View style={{
+        paddingTop: Constants.statusBarHeight,
+        backgroundColor: '#C2FFF9',
+        flex: 1
+      }}>
+        <StatusBar
+          animated={true}
+          backgroundColor="#71DFE7"
+        />
+        <View style={{
+          backgroundColor: '#71DFE7',
+          paddingTop: 25,
+          paddingBottom: 10
+        }}>
+          <Text style={{
+            textAlign: 'center',
+            fontSize: 50,
+            fontWeight: '700'
+          }}>Hello Dog</Text>
+        </View>
+        <Text style={{
+            textAlign: 'center',
+            fontSize: 20,
+            marginTop: 25,
+            color: '#009DAE',
+            marginTop: 25
+          }}>Error</Text>
+      </View>
+    )
+  }
+
+  let _renderItemData = ({ item, index }) => {
+    return (
+        <View style={{
+          marginTop: 25,
+          backgroundColor: '#FFE652',
+          borderRadius: 50
+        }}>
+          <Image source={{
+            uri: item.images[0]
+          }}
+          style={{ width: "100%", height: 200, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
+          />
+          <Text style={{
+            textAlign: 'center',
+            fontSize: 15,
+            padding: 10,
+            fontWeight: '700'
+          }}>{capitalizeFirstLetter(item.breed)}</Text>
+          <Text style={{
+              textAlign: 'center',
+              marginBottom: 5
+            }}>
+              Sub Breed :
+            </Text>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            marginHorizontal: 20,
+            marginBottom: 20
+          }}>
+
+            {
+              item.subbreed.map((el, idx) => {
+                return (
+                  <Text key={idx} style={{
+                    fontStyle: 'italic',
+                    padding: 5,
+                    backgroundColor: '#C2FFF9',
+                    borderRadius: 100,
+                    marginHorizontal: 5
+                  }}>{capitalizeFirstLetter(el)}</Text>
+                )
+              })
+            }
+            
+          </View>
+        </View>
+      )
+  }
+
+  return (
+      <View style={{
+        paddingTop: Constants.statusBarHeight,
+        backgroundColor: '#C2FFF9',
+        flex: 1
+      }}>
+        <StatusBar
+          animated={true}
+          backgroundColor="#71DFE7"
+          />
+        <View style={{
+          backgroundColor: '#71DFE7',
+          paddingTop: 25,
+          paddingBottom: 10
+        }}>
+          <Text style={{
+            textAlign: 'center',
+            fontSize: 50,
+            fontWeight: '700'
           }}>Hello Dog</Text>
         </View>
         <View style={{
@@ -108,7 +198,8 @@ export default function Home() {
               justifyContent: 'center'
             }}>
               <Text style={{
-                textAlign: 'center'
+                textAlign: 'center',
+                fontWeight: '700'
               }}>Search</Text>
           </TouchableOpacity>
         </View>
@@ -116,11 +207,32 @@ export default function Home() {
           layout={"default"}
           ref={(ref) => (carousel = ref)}
           data={data}
-          sliderWidth={500}
-          itemWidth={250}
+          sliderWidth={400}
+          itemWidth={300}
           renderItem={_renderItemData}
           onSnapToItem={(index) => setActiveIndex(index)}
         />
+        <View style={{
+          flex: 0.5,
+          backgroundColor: '#009DAE'
+        }}>
+          <Text style={{
+            color: 'white',
+            textAlign: 'center',
+            paddingTop: 20,
+            fontSize: 20
+          }}>
+            Farandi Angesti's Project
+          </Text>
+          <Text style={{
+            color: '#FFE652',
+            textAlign: 'center',
+            paddingTop: 5,
+            fontSize: 10
+          }} onPress={() => Linking.openURL('https://github.com/djiauwchaochong/helodogs')}>
+            Click here to open my Github
+          </Text>
+        </View>
       </View>
   );
 }
