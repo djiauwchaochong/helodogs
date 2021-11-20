@@ -167,8 +167,9 @@ export default function Home() {
         <View style={{
           flexDirection: 'row',
           justifyContent: 'center',
-          marginTop: 25,
-          marginHorizontal: 25
+          marginTop: 50,
+          marginHorizontal: 25,
+          marginBottom: 25
         }}>
           <TextInput
             value={text}
