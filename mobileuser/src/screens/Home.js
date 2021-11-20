@@ -102,7 +102,7 @@ export default function Home() {
           <Image source={{
             uri: item.images[0]
           }}
-          style={{ width: "100%", height: 200, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
+          style={{ width: "100%", height: 300, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
           />
           <Text style={{
             textAlign: 'center',
@@ -167,9 +167,9 @@ export default function Home() {
         <View style={{
           flexDirection: 'row',
           justifyContent: 'center',
-          marginTop: 50,
+          marginTop: 25,
           marginHorizontal: 25,
-          marginBottom: 25
+          marginBottom: 10
         }}>
           <TextInput
             value={text}
@@ -214,7 +214,7 @@ export default function Home() {
           onSnapToItem={(index) => setActiveIndex(index)}
         />
         <View style={{
-          flex: 0.5,
+          flex: 1.5,
           backgroundColor: '#009DAE'
         }}>
           <Text style={{
